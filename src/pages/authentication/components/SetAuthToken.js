@@ -5,7 +5,7 @@ const setAuthToken = (user) => {
       
     };
 
-    fetch(`${import.meta.env.VITE_API_URL}/user/${user?.email}`, {
+    fetch(`${process.env.REACT_APP_URL}/user/${user?.email}`, {
         method: 'PUT',
         headers: {
             'content-type': 'application/json',

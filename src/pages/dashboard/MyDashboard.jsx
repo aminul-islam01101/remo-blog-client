@@ -12,12 +12,12 @@ const MyDashboard = () => {
     console.log(user);
     const { data: currentUser } = useQuery(['currentUser'], () =>
         axios
-            .get(`${import.meta.env.VITE_API_URL}/user?email=${user?.email}`)
+            .get(`${process.env.REACT_APP_URL}/user?email=${user?.email}`)
             .then((res) => res.data)
     );
 
     // useEffect(() => {
-    //     fetch(`${import.meta.env.VITE_API_URL}/user?email=${user?.email}`, {
+    //     fetch(`${process.env.REACT_APP_URL}/user?email=${user?.email}`, {
     //         headers: {
     //             'content-type': 'application/json',
     //         },

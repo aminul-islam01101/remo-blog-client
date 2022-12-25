@@ -31,7 +31,7 @@ const Login = () => {
 
     const onSubmit = (data) => {
         setError('');
-        fetch(`${import.meta.env.VITE_API_URL}/user?email=${data?.email}`, {
+        fetch(`${process.env.REACT_APP_URL}/user?email=${data?.email}`, {
             headers: {
                 'content-type': 'application/json',
             },

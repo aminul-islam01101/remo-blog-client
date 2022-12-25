@@ -6,17 +6,18 @@ import Blog from './Blog';
 
 const Blogs = () => {
     const { data: allBlogs } = useQuery(['allBlogs'], () =>
-        axios.get(`${import.meta.env.VITE_API_URL}/blogs`).then((res) => res.data)
+        axios.get(`${process.env.REACT_APP_URL}/blogs`).then((res) => res.data)
     );
 
-    console.log();
+    console.log(allBlogs);
 
     return (
         <div className="bg-primary">
             <div className="grid lg:grid-cols-2 gap-10 container p-20  ">
-                {allBlogs?.map((blog) => (
+                {/* {allBlogs?.map((blog) => (
                     <Blog id={blog._id} blog={blog} />
-                ))}
+                ))} */}
+                {allBlogs.length}
             </div>
         </div>
     );
