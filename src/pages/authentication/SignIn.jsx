@@ -79,7 +79,7 @@ const Login = () => {
             .then((result) => {
                 const { user } = result;
                 console.log(user);
-                setAuthToken({ ...user, role: 'buyer' });
+                // setAuthToken({ ...user, role: 'buyer' });
                 user?.uid && navigate(from, { replace: true });
                 //  saveUser(user.email, user.displayName);
                 // setUserEmail(user?.email);
@@ -158,12 +158,12 @@ const Login = () => {
                         </div>
                         <div className="h-px flex-1 dark:bg-gray-700 sm:w-16" />
                     </div>
-                    <div className="flex justify-center space-x-4">
+                    <div >
                         <button
                             onClick={handleGoogleSignIn}
                             type="button"
                             aria-label="Log in with Google"
-                            className="button"
+                            className="button flex justify-center"
                         >
                             <FcGoogle />
                         </button>
