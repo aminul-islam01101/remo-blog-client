@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
 import Error from '../pages/Error';
 import Home from '../pages/Home/Home';
 
@@ -8,21 +8,40 @@ import SignUp from '../pages/authentication/SignUp';
 
 import Blogs from '../pages/Home/blogs/Blogs';
 
-import AdminRoute from './AdminRoute';
 
-import DashboardRoot from './DashboardRoot';
 
-import ProtectedRoute from './ProtectedRoute';
+
 import Root from './Root';
-import MyDashboard from '../pages/dashboard/MyDashboard';
-import AllBlogs from '../pages/dashboard/admin/AllBlogs';
+import AllBlogs from '../pages/Home/blogs/AllBlogs';
+import CategorizedBlogs from '../pages/Home/blogs/CategorizedBlogs';
+import BlogDetails from '../pages/Home/blogs/BlogDetails';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path="/" element={<Root />} errorElement={<Error />}>
                 <Route path="/" element={<Home />} />
-                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/blogs" element={<Blogs />}>
+                    <Route path="/blogs" element={<AllBlogs />} />
+                    <Route
+                    path="/blogs/category/:id"
+                    element={<CategorizedBlogs />}
+                    loader={async ({ params }) =>
+                    fetch(`${process.env.REACT_APP_URL}/category-blogs/${params.id}`)
+                }
+                />
+              
+            </Route>
+            <Route
+                path="/blog-details/:id"
+                element={<BlogDetails />}
+                
+            />
+
+
+
+
+           
 
                 {/* <Route
                     path="/category/:id"
