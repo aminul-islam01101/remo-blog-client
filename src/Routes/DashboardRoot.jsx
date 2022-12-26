@@ -3,17 +3,17 @@
 
 import React, { useContext } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import AuthContext from '../Contexts/AuthContext';
 import Avatar from '../assets/images/avatar.png';
 import Navbar from '../components/Navbar';
-import AuthContext from '../Contexts/AuthContext';
 import useAdmin from '../hooks/useAdmin';
-
+import useUser from '../hooks/useUser';
 
 const DashboardRoot = () => {
     const { user } = useContext(AuthContext);
 
     const [isAdmin] = useAdmin(user?.email);
-  
+    const [isUser] = useUser(user?.email);
 
     return (
         <div>
@@ -39,24 +39,36 @@ const DashboardRoot = () => {
                                     </div>
                                 </div>
                             )}
-                       
                         </li>
+                        {isUser && (
+                            <div className="flex">
+                                <div>{user?.displayName}s Dashboard</div>
+                                <div>
+                                    <img
+                                        className="w-12 h-12 rounded-full"
+                                        src={user?.photoURL || Avatar}
+                                        alt=""
+                                    />
+                                </div>
+                            </div>
+                        )}
 
-                    
                         {isAdmin && (
                             <>
                                 <li>
-                                    <NavLink to="/dashboard/buyers">All buyers</NavLink>
+                                    <NavLink to="/dashboard/all-blogs">All Blogs</NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/dashboard/sellers">All sellers</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/dashboard/reported">Reported</NavLink>
+                                    <NavLink to="/dashboard/add-blogs">Add Blogs</NavLink>
                                 </li>
                             </>
                         )}
-                    
+
+                        {isUser && (
+                            <li>
+                                <NavLink to="/dashboard/my-blogs">My Blogs</NavLink>
+                            </li>
+                        )}
                     </ul>
                 </div>
             </div>

@@ -129,22 +129,6 @@ const SignUp = () => {
                         </label>
                     </div>
 
-                    {/* selecting a role */}
-                    <div className="space-y-1 text-sm">
-                        <label htmlFor="role" className="block dark:text-gray-400">
-                            What do you want in Second-buy?
-                            <select
-                                placeholder="What you want?"
-                                id="role"
-                                className="w-full  input py-2 input-bordered bg-error"
-                                {...register('role', { required: true })}
-                            >
-                                <option value="buyer">Buy books</option>
-                                <option value="seller">Sell books</option>
-                            </select>
-                        </label>
-                    </div>
-
                     {/* email */}
                     <div className="space-y-1 text-sm">
                         <label htmlFor="email" className="block dark:text-gray-400">

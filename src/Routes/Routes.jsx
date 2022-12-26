@@ -15,6 +15,16 @@ import Root from './Root';
 import AllBlogs from '../pages/Home/blogs/AllBlogs';
 import CategorizedBlogs from '../pages/Home/blogs/CategorizedBlogs';
 import BlogDetails from '../pages/Home/blogs/BlogDetails';
+import DashboardRoot from './DashboardRoot';
+import MyDashboard from '../pages/dashboard/MyDashboard';
+import AdminRoute from './AdminRoute';
+
+import ProtectedRoute from './ProtectedRoute';
+import AllBlogsList from '../pages/dashboard/admin/AllBlogsList';
+import AddBlogs from '../pages/dashboard/admin/AddBlogs';
+import UserRoute from './UserRoute';
+
+import MyBlogs from '../pages/dashboard/user/MyBlogs';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -55,7 +65,7 @@ const router = createBrowserRouter(
                 <Route path="/Signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
             </Route>
-            {/* <Route
+            <Route
                 path="/dashboard"
                 element={
                     <ProtectedRoute>
@@ -67,14 +77,31 @@ const router = createBrowserRouter(
                 <Route path="/dashboard" element={<MyDashboard />} />
 
                 <Route
-                    path="/dashboard/buyers"
+                    path="/dashboard/all-blogs"
                     element={
                         <AdminRoute>
-                            <AllBlogs />
+                            <AllBlogsList />
                         </AdminRoute>
                     }
                 />
-            </Route> */}
+                <Route
+                    path="/dashboard/add-blogs"
+                    element={
+                        <AdminRoute>
+                            <AddBlogs />
+                        </AdminRoute>
+                    }
+                />
+                  
+                <Route
+                    path="/dashboard/my-blogs"
+                    element={
+                        <UserRoute>
+                            <MyBlogs />
+                        </UserRoute>
+                    }
+                />
+            </Route>
         </>
     )
 );

@@ -42,7 +42,7 @@ const MyDashboard = () => {
                 <div>
                     {' '}
                     <div className="text-xl text-accent text-center">
-                        Welcome to {currentUser.user.role.toUpperCase()}s dashboard
+                        Welcome to {currentUser?.user?.name}s dashboard
                     </div>
                     <div>
                         <label
