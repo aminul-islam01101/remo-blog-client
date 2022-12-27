@@ -207,7 +207,7 @@ const SignUp = () => {
                             <div>
                                 <button
                                     type="submit"
-                                    className="button mt-5"
+                                    className="button mt-5 w-full"
                                 >
                                     Sign Up
                                 </button>

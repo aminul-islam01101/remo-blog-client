@@ -7,7 +7,7 @@ import { MdDarkMode, MdOutlineLightMode } from 'react-icons/md';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import AuthContext from '../Contexts/AuthContext';
 import Avatar from '../assets/images/avatar.png';
-import Logo from '../assets/images/logo.png';
+import Logo from '../assets/images/Vector.png';
 
 const Navbar = () => {
     const [dark, setDark] = useState(false);
@@ -129,8 +129,8 @@ const Navbar = () => {
                             to="/"
                             className="btn btn-ghost normal-case hidden md:flex text-xl"
                         >
-                            <img className="w-8 mr-2" src={Logo} alt="logo" />
-                            <span className="text-secondary dark:text-teal-300">Remo-Start</span>
+                            <img className="w-16 mr-2" src={Logo} alt="logo" />
+                            
                         </NavLink>
                     </div>
                     <div className="navbar-center lg:flex text-sm">

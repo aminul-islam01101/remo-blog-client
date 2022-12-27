@@ -145,7 +145,7 @@ const Login = () => {
                                 Reset
                             </button>
                         </div>
-                        <button type="submit" className="button">
+                        <button type="submit" className="button w-full">
                             Login
                         </button>
                     </form>
@@ -163,7 +163,7 @@ const Login = () => {
                             onClick={handleGoogleSignIn}
                             type="button"
                             aria-label="Log in with Google"
-                            className="button flex justify-center"
+                            className="btn btn-outline w-full flex justify-center text-2xl"
                         >
                             <FcGoogle />
                         </button>

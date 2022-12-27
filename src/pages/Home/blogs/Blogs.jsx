@@ -17,7 +17,7 @@ const Blogs = () => {
 
 
     return (
-        <div className="bg-primary">
+        <div className="bg-white">
             <div className="hero min-h-screen " style={{ backgroundImage: `url(${BlogImage})` }}>
                 <div className="hero-overlay bg-neutral bg-opacity-80" />
                 <div className="hero-content text-center text-neutral-content">
@@ -32,8 +32,8 @@ const Blogs = () => {
                     </div>
                 </div>
             </div>
-            <div className='container mt-20'>
-                <h2>Popular Tags</h2>
+            <div className='container mt-20 bg-primary p-5 '>
+            <p className=' py-5 text-2xl text-center '>Popular Tags</p>
                 <div className="grid grid-flow-col auto-cols-fr gap-5 ">
                 {allCategory?.map((category) => (
                     <Tags key={category._id} category={category} />

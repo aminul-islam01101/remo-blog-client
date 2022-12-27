@@ -8,22 +8,20 @@ import SignUp from '../pages/authentication/SignUp';
 
 import Blogs from '../pages/Home/blogs/Blogs';
 
-
-
-
-import Root from './Root';
 import AllBlogs from '../pages/Home/blogs/AllBlogs';
-import CategorizedBlogs from '../pages/Home/blogs/CategorizedBlogs';
 import BlogDetails from '../pages/Home/blogs/BlogDetails';
-import DashboardRoot from './DashboardRoot';
+import CategorizedBlogs from '../pages/Home/blogs/CategorizedBlogs';
 import MyDashboard from '../pages/dashboard/MyDashboard';
 import AdminRoute from './AdminRoute';
+import DashboardRoot from './DashboardRoot';
+import Root from './Root';
 
-import ProtectedRoute from './ProtectedRoute';
-import AllBlogsList from '../pages/dashboard/admin/AllBlogsList';
 import AddBlogs from '../pages/dashboard/admin/AddBlogs';
+import AllBlogsList from '../pages/dashboard/admin/AllBlogsList';
+import ProtectedRoute from './ProtectedRoute';
 import UserRoute from './UserRoute';
 
+import UpdateBlog from '../pages/dashboard/admin/UpdateBlog';
 import MyBlogs from '../pages/dashboard/user/MyBlogs';
 import MyBookmark from '../pages/dashboard/user/MyBookmark';
 
@@ -35,24 +33,14 @@ const router = createBrowserRouter(
                 <Route path="/blogs" element={<Blogs />}>
                     <Route path="/blogs" element={<AllBlogs />} />
                     <Route
-                    path="/blogs/category/:id"
-                    element={<CategorizedBlogs />}
-                    loader={async ({ params }) =>
-                    fetch(`${process.env.REACT_APP_URL}/category-blogs/${params.id}`)
-                }
-                />
-              
-            </Route>
-            <Route
-                path="/blog-details/:id"
-                element={<BlogDetails />}
-                
-            />
-
-
-
-
-           
+                        path="/blogs/category/:id"
+                        element={<CategorizedBlogs />}
+                        loader={async ({ params }) =>
+                            fetch(`${process.env.REACT_APP_URL}/category-blogs/${params.id}`)
+                        }
+                    />
+                </Route>
+                <Route path="/blog-details/:id" element={<BlogDetails />} />
 
                 {/* <Route
                     path="/category/:id"
@@ -65,6 +53,15 @@ const router = createBrowserRouter(
 
                 <Route path="/Signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
+
+                <Route
+                    path="/dashboard/all-blogs/edit/:id"
+                    element={
+                        <AdminRoute>
+                            <UpdateBlog />
+                        </AdminRoute>
+                    }
+                />
             </Route>
             <Route
                 path="/dashboard"
@@ -86,6 +83,14 @@ const router = createBrowserRouter(
                     }
                 />
                 <Route
+                    path="/dashboard/all-blogs/edit/:id"
+                    element={
+                        <AdminRoute>
+                            <UpdateBlog />
+                        </AdminRoute>
+                    }
+                />
+                <Route
                     path="/dashboard/add-blogs"
                     element={
                         <AdminRoute>
@@ -93,7 +98,7 @@ const router = createBrowserRouter(
                         </AdminRoute>
                     }
                 />
-                  
+
                 <Route
                     path="/dashboard/my-blogs"
                     element={
