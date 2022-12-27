@@ -65,9 +65,15 @@ const DashboardRoot = () => {
                         )}
 
                         {isUser && (
-                            <li>
-                                <NavLink to="/dashboard/my-blogs">My Blogs</NavLink>
-                            </li>
+                            <>
+                         
+                                <li>
+                                    <NavLink to="/dashboard/my-blogs">My Blogs</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/dashboard/my-bookmark">My Bookmark</NavLink>
+                                </li>
+                            </>
                         )}
                     </ul>
                 </div>

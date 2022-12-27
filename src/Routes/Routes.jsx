@@ -25,6 +25,7 @@ import AddBlogs from '../pages/dashboard/admin/AddBlogs';
 import UserRoute from './UserRoute';
 
 import MyBlogs from '../pages/dashboard/user/MyBlogs';
+import MyBookmark from '../pages/dashboard/user/MyBookmark';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -98,6 +99,14 @@ const router = createBrowserRouter(
                     element={
                         <UserRoute>
                             <MyBlogs />
+                        </UserRoute>
+                    }
+                />
+                <Route
+                    path="/dashboard/my-bookmark"
+                    element={
+                        <UserRoute>
+                            <MyBookmark />
                         </UserRoute>
                     }
                 />
