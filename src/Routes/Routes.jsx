@@ -77,6 +77,7 @@ const router = createBrowserRouter(
                 <Route
                     path="/dashboard/all-blogs"
                     element={
+                        
                         <AdminRoute>
                             <AllBlogsList />
                         </AdminRoute>

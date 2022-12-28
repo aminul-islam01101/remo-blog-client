@@ -68,9 +68,8 @@ const AddProduct = () => {
                     const booksInfo = {
                         ...data,
                         image: imgData.data.url,
-                        postingTime: new Date(),
-                        sellerName: user?.displayName,
-                        sellerEmail: user?.email,
+                        postingTime: new Date().toDateString(),
+                      
                       
                     };
                     mutate(booksInfo);
