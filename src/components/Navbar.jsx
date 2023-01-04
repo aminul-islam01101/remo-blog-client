@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React, { useContext, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { BiUser } from 'react-icons/bi';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
-import logo from '../assets/images/logoBlack.png';
 import AuthContext from '../Contexts/AuthContext';
+import logo from '../assets/images/logoBlack.png';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { user,  logOut, setLoading, setUser } = useContext(AuthContext)
+    const { user, logOut, setLoading, setUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const handleClick = () => {
         logOut()
@@ -24,7 +24,6 @@ const Navbar = () => {
                 console.error(er);
             });
     };
-
 
     return (
         <div className="py-5  bg-white ">
@@ -60,12 +59,22 @@ const Navbar = () => {
                     </li> */}
                     <li>
                         <Link
-                            to="/"
+                            to="/blogs"
                             aria-label="Blog"
                             title="Blog"
                             className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                         >
                             Blog
+                        </Link>
+                    </li>
+                    <li>
+                        <Link
+                            to="/start-up"
+                            aria-label="Blog"
+                            title="Blog"
+                            className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                        >
+                            StartUp
                         </Link>
                     </li>
                     {/* dropdown */}
@@ -100,44 +109,44 @@ const Navbar = () => {
                                     </Link>
                                 </li> */}
                                 {user?.uid ? (
-                                        <li>
-                                            <button
-                                                onClick={handleClick}
-                                                type="button"
-                                                className="text-black font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                    <li>
+                                        <button
+                                            onClick={handleClick}
+                                            type="button"
+                                            className="text-black font-normal text-xs tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                        >
+                                            logout
+                                        </button>
+                                    </li>
+                                ) : (
+                                    <div className="flex flex-col justify-center items-center gap-2">
+                                        <li className="w-full text-center">
+                                            <Link
+                                                to="/login"
+                                                className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400 "
                                             >
-                                                logout
-                                            </button>
+                                                Login
+                                            </Link>
                                         </li>
-                                    ) : (
-                                        <div className="flex flex-col justify-center items-center gap-2">
-                                            <li className="w-full text-center">
-                                                <Link
-                                                    to="/login"
-                                                    className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400 "
-                                                >
-                                                    Login
-                                                </Link>
-                                            </li>
-                                            <li className="w-full ">
-                                                <Link
-                                                    to="/signup"
-                                                    className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400  "
-                                                >
-                                                    Sign Up
-                                                </Link>
-                                            </li>
-                                        </div>
-                                    )}
+                                        <li className="w-full ">
+                                            <Link
+                                                to="/signup"
+                                                className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400  "
+                                            >
+                                                Sign Up
+                                            </Link>
+                                        </li>
+                                    </div>
+                                )}
                             </ul>
                         </div>
                     </li>
                 </ul>
                 <div className="lg:hidden">
-                    <button type='button'
+                    <button
+                        type="button"
                         aria-label="Open Menu"
                         title="Open Menu"
-                    
                         className="p-2 -mr-1 transition duration-200 rounded 
                         focus:outline-none focus:shadow-outline hover:bg-deep-purple-50 focus:bg-deep-purple-50"
                         onClick={() => setIsMenuOpen(true)}
@@ -158,7 +167,7 @@ const Navbar = () => {
                         </svg>
                     </button>
                     {isMenuOpen && (
-                        <div className="absolute top-0 left-0 w-full" >
+                        <div className="absolute top-0 left-0 w-full">
                             <div className="p-5 bg-white border rounded shadow-sm">
                                 <div className="flex items-center justify-between mb-4">
                                     <div>
@@ -172,7 +181,8 @@ const Navbar = () => {
                                         </Link>
                                     </div>
                                     <div>
-                                        <button type='button'
+                                        <button
+                                            type="button"
                                             aria-label="Close Menu"
                                             title="Close Menu"
                                             className="p-2 -mt-2 -mr-2 transition duration-200 rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline"
@@ -189,49 +199,56 @@ const Navbar = () => {
                                 </div>
                                 <nav>
                                     <ul className="menu">
-                                      
-                                     
                                         <li>
                                             <Link
-                                                to="/"
+                                                to="/blogs"
                                                 aria-label="Blog"
                                                 title="Blog"
-                                              
                                                 className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                                             >
                                                 Blog
                                             </Link>
                                         </li>
-                                        {user?.uid ? (
                                         <li>
-                                            <button
-                                                onClick={handleClick}
-                                                type="button"
-                                                className="text-black font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
+                                            <Link
+                                                to="/start-up"
+                                                aria-label="Blog"
+                                                title="Blog"
+                                                className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400"
                                             >
-                                                logout
-                                            </button>
+                                                StartUp
+                                            </Link>
                                         </li>
-                                    ) : (
-                                        <div className="flex flex-col justify-center items-center gap-2">
-                                            <li className="w-full text-center">
-                                                <Link
-                                                    to="/login"
-                                                    className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400 "
+                                        {user?.uid ? (
+                                            <li>
+                                                <button
+                                                    onClick={handleClick}
+                                                    type="button"
+                                                    className="text-black font-normal text-xs tracking-wide  transition-colors duration-200 hover:text-deep-purple-accent-400"
                                                 >
-                                                    Login
-                                                </Link>
+                                                    logout
+                                                </button>
                                             </li>
-                                            <li className="w-full ">
-                                                <Link
-                                                    to="/signup"
-                                                    className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400  "
-                                                >
-                                                    Sign Up
-                                                </Link>
-                                            </li>
-                                        </div>
-                                    )}
+                                        ) : (
+                                            <div className="flex flex-col justify-center items-center gap-2">
+                                                <li className="w-full text-center">
+                                                    <Link
+                                                        to="/login"
+                                                        className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400 "
+                                                    >
+                                                        Login
+                                                    </Link>
+                                                </li>
+                                                <li className="w-full ">
+                                                    <Link
+                                                        to="/signup"
+                                                        className="font-normal text-xs tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400  "
+                                                    >
+                                                        Sign Up
+                                                    </Link>
+                                                </li>
+                                            </div>
+                                        )}
                                     </ul>
                                 </nav>
                             </div>

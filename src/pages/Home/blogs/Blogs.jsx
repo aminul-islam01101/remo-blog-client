@@ -57,7 +57,7 @@ const Blogs = () => {
                     {allCategory?.map((category) => (
                         <li key={category._id}>
                             <NavLink
-                                to={`/category/${category.categoryId}`}
+                                to={`/blogs/category/${category.categoryId}`}
                                 className={({ isActive }) => (isActive ? active : inActive)}
                             >
                                 {category.categoryName}

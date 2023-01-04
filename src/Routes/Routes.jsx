@@ -25,17 +25,18 @@ import UpdateBlog from '../pages/dashboard/admin/UpdateBlog';
 import MyBlogs from '../pages/dashboard/user/MyBlogs';
 import MyBookmark from '../pages/dashboard/user/MyBookmark';
 import MakeAdmin from '../pages/dashboard/admin/MakeAdmin';
+import StartUp from '../pages/startUp/StartUp';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path="/" element={<Root />} errorElement={<Error />}>
-                {/* <Route path="/" element={<Home />} /> */}
-                <Route path="/" element={<Blogs />}>
-                    <Route path="/" element={<AllBlogs />} />
-                    {/* <Route path="/blogs" element={<AllBlogs />} /> */}
+                <Route path="/" element={<Home />} />
+                <Route path="/blogs" element={<Blogs />}>
+                    {/* <Route path="/" element={<AllBlogs />} /> */}
+                    <Route path="/blogs" element={<AllBlogs />} />
                     <Route
-                        path="/category/:id"
+                        path="blog/category/:id"
                         element={<CategorizedBlogs />}
                         loader={async ({ params }) =>
                             fetch(`${process.env.REACT_APP_URL}/category-blogs/${params.id}`)
@@ -63,6 +64,7 @@ const router = createBrowserRouter(
 
                 <Route path="/Signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
+                <Route path="/start-up" element={<StartUp />} />
 
                 <Route
                     path="/dashboard/all-blogs/edit/:id"
