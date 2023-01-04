@@ -37,10 +37,10 @@ const MyMeetup = () => {
     };
 
     return (
-        <div className="bg-primary min-h-screen pt-20">
+        <div className="bg-white min-h-screen pt-20">
             <div className="container">
-                <h1 className="text-center text-accent text-2xl mb-8">All Blogs</h1>
-                <div className="overflow-x-auto">
+                <h1 className="text-center text-black text-2xl mb-8">All Blogs</h1>
+                <div className="overflow-x-auto text-black">
                     <table className=" bg-slate-200 w-full">
                         <thead>
                             <tr>

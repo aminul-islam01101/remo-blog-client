@@ -24,24 +24,34 @@ import UserRoute from './UserRoute';
 import UpdateBlog from '../pages/dashboard/admin/UpdateBlog';
 import MyBlogs from '../pages/dashboard/user/MyBlogs';
 import MyBookmark from '../pages/dashboard/user/MyBookmark';
+import MakeAdmin from '../pages/dashboard/admin/MakeAdmin';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
             <Route path="/" element={<Root />} errorElement={<Error />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/blogs" element={<Blogs />}>
-                    <Route path="/blogs" element={<AllBlogs />} />
+                {/* <Route path="/" element={<Home />} /> */}
+                <Route path="/" element={<Blogs />}>
+                    <Route path="/" element={<AllBlogs />} />
+                    {/* <Route path="/blogs" element={<AllBlogs />} /> */}
                     <Route
-                        path="/blogs/category/:id"
+                        path="/category/:id"
                         element={<CategorizedBlogs />}
                         loader={async ({ params }) =>
                             fetch(`${process.env.REACT_APP_URL}/category-blogs/${params.id}`)
                         }
                     />
                 </Route>
-                <Route path="/blog-details/:id" element={<BlogDetails />} />
-
+                {/* <Route path="/blog-details/:id" element={<BlogDetails />} /> */}
+                <Route
+                path="/blog-details/:id"
+                element={
+                    <ProtectedRoute>
+                       <BlogDetails />
+                    </ProtectedRoute>
+                }
+               
+            />
                 {/* <Route
                     path="/category/:id"
                     element={
@@ -96,6 +106,14 @@ const router = createBrowserRouter(
                     element={
                         <AdminRoute>
                             <AddBlogs />
+                        </AdminRoute>
+                    }
+                />
+                <Route
+                    path="/dashboard/make-admin"
+                    element={
+                        <AdminRoute>
+                            <MakeAdmin/>
                         </AdminRoute>
                     }
                 />

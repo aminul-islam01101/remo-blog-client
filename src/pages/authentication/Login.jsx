@@ -1,236 +1,3 @@
-// /* eslint-disable no-shadow */
-// /* eslint-disable react/jsx-props-no-spreading */
-// import React, { useContext, useState } from 'react';
-// import { useForm } from 'react-hook-form';
-// import { toast } from 'react-hot-toast';
-// import { Link, useNavigate } from 'react-router-dom';
-
-// import AuthContext from '../../Contexts/AuthContext';
-
-
-// import setAuthToken from './components/SetAuthToken';
-
-// const SignUp = () => {
-//     const { createUser, updateUserProfile } = useContext(AuthContext);
-//     const [error, setError] = useState('');
-//     const [userEmail, setUserEmail] = useState('');
-
-//     const navigate = useNavigate();
-
-//     const {
-//         register,
-//         handleSubmit,
-//         getValues,
-//         reset,
-//         formState: { errors },
-//     } = useForm({ mode: 'onChange' });
-//     const { password, email } = getValues();
-
-//     // jwt verify
-
-//     const onSubmit = (data) => {
-//         console.log(data.role);
-
-//         const { firstName, lastName } = data;
-//         setError('');
-//         createUser(email, password)
-//             .then((result) => {
-//                 const { user } = result;
-//                 console.log(user);
-//                 reset();
-
-//                 const handleUpdateProfile = () => {
-//                     const profile = {
-//                         displayName: `${firstName} ${lastName}`,
-//                     };
-//                     updateUserProfile(profile)
-//                         .then(() => {
-//                             setAuthToken({ ...user, role: data?.role, verified: false });
-//                             // mutate({ email, userName: profile.displayName });
-//                         })
-
-//                         .catch((err) => console.error(err));
-//                 };
-
-//                 toast.success('Signup successful');
-//                 navigate('/');
-
-//                 handleUpdateProfile();
-
-//                 //  user?.uid && navigate(from, { replace: true });
-//             })
-//             .catch((err) => {
-//                 console.error(err);
-//                 setError(err.message);
-//             });
-//     };
-
-//     return (
-//         <div className="container w-full max-w-md p-8 space-y-3 my-10 rounded-xl  bg-primary text-accent">
-//             <h1 className="text-2xl font-bold text-center">Sign Up</h1>
-//             <form
-//                 onSubmit={handleSubmit(onSubmit)}
-//                 className="space-y-6 ng-untouched ng-pristine ng-valid"
-//             >
-//                 {/* username */}
-//                 <div className="space-y-1 text-sm">
-//                     <div>
-//                         <label htmlFor="firstName" className="block dark:text-gray-400">
-//                             User Name
-//                             <div className="flex gap-2">
-//                                 <div>
-//                                     <input
-//                                         {...register('firstName', {
-//                                             required: true,
-//                                             maxLength: 20,
-//                                             pattern: /^[A-Za-z]+$/i,
-//                                         })}
-//                                         id="firstName"
-//                                         placeholder="First Name"
-//                                         className="w-full  input py-2 input-bordered bg-error "
-//                                     />
-
-//                                     {errors?.lastName?.type === 'pattern' && (
-//                                         <p className="text-red-500">
-//                                             *Alphabetical characters only
-//                                         </p>
-//                                     )}
-//                                     {errors?.lastName?.type === 'maxLength' && (
-//                                         <p className="text-red-500">
-//                                             *First name cannot exceed 20 characters
-//                                         </p>
-//                                     )}
-//                                 </div>
-
-//                                 <div>
-//                                     <input
-//                                         {...register('lastName', {
-//                                             required: true,
-//                                             maxLength: 20,
-//                                             pattern: /^[A-Za-z]+$/i,
-//                                         })}
-//                                         id="lastName"
-//                                         placeholder="Last Name"
-//                                         className="w-full  input py-2 input-bordered bg-error"
-//                                     />
-
-//                                     {errors?.lastName?.type === 'pattern' && (
-//                                         <p className="text-red-500">
-//                                             *Alphabetical characters only
-//                                         </p>
-//                                     )}
-//                                     {errors?.lastName?.type === 'maxLength' && (
-//                                         <p className="text-red-500">
-//                                             *Last name cannot exceed 20 characters
-//                                         </p>
-//                                     )}
-//                                 </div>
-//                             </div>
-//                         </label>
-//                     </div>
-
-//                     {/* email */}
-//                     <div className="space-y-1 text-sm">
-//                         <label htmlFor="email" className="block dark:text-gray-400">
-//                             Email
-//                             <input
-//                                 {...register('email', { required: true })}
-//                                 type="email"
-//                                 id="email"
-//                                 placeholder="Enter email"
-//                                 className="w-full  input py-2 input-bordered bg-error"
-//                             />
-//                         </label>
-//                     </div>
-//                     {/* password */}
-//                     <div className="space-y-1 text-sm">
-//                         <label htmlFor="password" className="block dark:text-gray-400">
-//                             Password
-//                             <input
-//                                 {...register('password', {
-//                                     required: true,
-
-//                                     pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
-//                                 })}
-//                                 type="password"
-//                                 id="password"
-//                                 placeholder="Password"
-//                                 className="w-full  input py-2 input-bordered bg-error"
-//                             />
-//                             {errors?.password?.type === 'pattern' && (
-//                                 <p className="text-red-500">
-//                                     *Minimum 6 Character, include one letter and one number
-//                                 </p>
-//                             )}
-//                         </label>
-//                     </div>
-//                     {/* confirm password */}
-//                     <div className="space-y-1 text-sm">
-//                         <label htmlFor="confirmPassword" className="block dark:text-gray-400">
-//                             Confirm password
-//                             <input
-//                                 type="password"
-//                                 {...register('confirmPassword', {
-//                                     validate: (val) =>
-//                                         password === val || 'Passwords should match!',
-//                                 })}
-//                                 id="confirmPassword"
-//                                 placeholder="Confirm password"
-//                                 className="w-full  input py-2 input-bordered bg-error"
-//                             />
-//                             {errors?.confirmPassword && (
-//                                 <p className="text-red-500">{errors?.confirmPassword?.message}</p>
-//                             )}
-//                         </label>
-
-//                         {error && (
-//                             <h2 className="text-xl text-rose-600 font-bold my-10">
-//                                 *{error.split('/')[1].split(')')[0]}
-//                             </h2>
-//                         )}
-
-//                         {/* checkbox */}
-//                         <div className="flex items-center">
-//                             <label htmlFor="terms" className="text-sm dark:text-gray-400">
-//                                 <input
-//                                     type="checkbox"
-//                                     name="terms"
-//                                     id="terms"
-//                                     aria-label="terms"
-//                                     required
-//                                     className="mr-1 rounded-sm focus:ring-violet-400 focus:dark:border-violet-400 focus:ring-2 accent-violet-400"
-//                                 />
-//                                 I agree to terms and condition
-//                             </label>
-//                         </div>
-//                         <div className="space-y-2">
-//                             <div>
-//                                 <button
-//                                     type="submit"
-//                                     className="button mt-5 w-full"
-//                                 >
-//                                     Sign Up
-//                                 </button>
-//                             </div>
-//                             <p className="px-6 text-sm text-center dark:text-gray-400">
-//                                 Already member?
-//                                 <Link
-//                                     to="/Signin"
-//                                     rel="noopener noreferrer"
-//                                     className="hover:underline  dark:text-violet-400"
-//                                 >
-//                                     Sign in
-//                                 </Link>
-//                             </p>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default SignUp;
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable prettier/prettier */
@@ -251,7 +18,7 @@ import AuthContext from '../../Contexts/AuthContext';
 import setAuthToken from './components/SetAuthToken';
 import registerLogo from '../../assets/images/WorkflowRegister.png';
 
-const SignUp = () => {
+const RegistationPage = () => {
     const { createUser, updateUserProfile } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [userEmail, setUserEmail] = useState('');
@@ -304,17 +71,14 @@ const SignUp = () => {
             });
     };
     return(
-    <section className="bg-white py-10">
-        <div className="flex container flex-col md:flex-row w-full gap-10 justify-between">
-            <section className="flex flex-col md:w-1/2 items-center  col-span-6 justify-center">
-            {/* <section className="flex flex-col h-32 items-center lg:h-[533px] xl:col-span-6 justify-center lg:w-1/2 lg:mt-20"> */}
-                <div>
-                    <img
-                        alt="Night"
-                        src={registerLogo}
-                        className=" h-full w-full  object-cover"
-                    />
-                </div>
+    <section className="bg-white my-10">
+        <div className="flex">
+            <section className="flex flex-col h-32 items-center lg:h-[533px] xl:col-span-6 justify-center lg:w-1/2 lg:mt-20">
+                <img
+                    alt="Night"
+                    src={registerLogo}
+                    className="inset-0 h-full w-full object-contain"
+                />
                 <div className="grid grid-cols-4 place-items-center space-x-3">
                     <BsDiscord className="text-xl" />
                     <BsLinkedin className="text-xl" />
@@ -325,7 +89,7 @@ const SignUp = () => {
 
             <div
                 aria-label="Main"
-                className="flex items-center justify-center  py-8  lg:col-span-7 lg:py-12 lg:px-16 xl:col-span-6  "
+                className="flex items-center lg:w-1/2 justify-center px-8 py-8 lg:py-12 lg:px-16"
             >
                 <div className="max-w-xl lg:max-w-3xl">
                     <div className="relative -mt-16 block">
@@ -350,7 +114,7 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit(onSubmit)} action="#" className="mt-8 grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
                             <label
-                                htmlFor="firstName"
+                                htmlFor="FirstName"
                                 className="block text-sm font-medium text-gray-700"
                             >
                                 First Name
@@ -364,7 +128,7 @@ const SignUp = () => {
                                     pattern: /^[A-Za-z]+$/i,
                                 })}
                                 id="firstName"
-                                name="firstName"
+                                name="first_name"
                                 className="mt-1 w-full p-3 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md"
                             />
                                 {errors?.firstName?.type === 'pattern' && (
@@ -381,7 +145,7 @@ const SignUp = () => {
 
                         <div className="col-span-6 sm:col-span-3">
                             <label
-                                htmlFor="lastName"
+                                htmlFor="LastName"
                                 className="block text-sm font-medium text-gray-700"
                             >
                                 Last Name
@@ -396,7 +160,7 @@ const SignUp = () => {
                                             pattern: /^[A-Za-z]+$/i,
                                         })}
                                         id="lastName"
-                                name="lastName"
+                                name="last_name"
                                 className="mt-1 w-full p-3 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md"
                             />
                             
@@ -457,7 +221,7 @@ const SignUp = () => {
 
                         <div className="col-span-6">
                             <label
-                                htmlFor="confirmPassword"
+                                htmlFor="PasswordConfirmation"
                                 className="block text-sm font-medium text-gray-700"
                             >
                                 Password Confirmation
@@ -470,7 +234,7 @@ const SignUp = () => {
                                        password === val || 'Passwords should match!',
                                })}
                                id="confirmPassword"
-                                name="confirmPassword"
+                                name="password_confirmation"
                                 className="mt-1 w-full p-3 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md"
                             />
                               {errors?.confirmPassword && (
@@ -513,12 +277,12 @@ const SignUp = () => {
                         </div>
 
                         <div className="col-span-6 sm:flex sm:items-center flex-col sm:gap-3 justify-center items-center">
-                            <button type='submit' className="inline-block shrink-0 rounded-md border border-blue-600 px-4 text-2xl py-3 font-medium text-black transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
+                            <button type='button' className="inline-block shrink-0 rounded-md border border-blue-600 px-4 text-2xl py-3 font-medium text-black transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
                                 <IoIosArrowForward />
                             </button>
                             <p className="mt-4 text-sm font-semibold sm:mt-0">
                                 Already Registered?
-                                <Link to="/login" className="text-red-500">
+                                <Link to="/Signin" className="text-red-500">
                                     {' '}
                                     Login Here
                                 </Link>
@@ -532,4 +296,4 @@ const SignUp = () => {
     </section>
 )};
 
-export default SignUp;
+export default RegistationPage;

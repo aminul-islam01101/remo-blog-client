@@ -61,6 +61,9 @@ const DashboardRoot = () => {
                                 <li>
                                     <NavLink to="/dashboard/add-blogs">Add Blogs</NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/dashboard/make-admin">Make admin</NavLink>
+                                </li>
                             </>
                         )}
 

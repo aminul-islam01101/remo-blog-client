@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -7,11 +8,12 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { AiOutlineShareAlt, AiFillLike } from 'react-icons/ai';
+import { AiFillLike, AiOutlineShareAlt } from 'react-icons/ai';
 import { BiLike } from 'react-icons/bi';
-import { BsBookmarkPlus } from 'react-icons/bs';
 import { FaRegComments } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
+import { toast as toastify } from 'react-toastify';
 import {
     FacebookIcon,
     FacebookMessengerIcon,
@@ -26,82 +28,62 @@ import {
     WhatsappIcon,
     WhatsappShareButton
 } from 'react-share';
-
 import AuthContext from '../../../Contexts/AuthContext';
 
+
 const BlogDetails = () => {
-    // const [comments, setComments] = useState([])
+    const [comments, setComments] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [likeStatus, setLikeStatus] = useState(false)
     const [likeCount, setLikeCount] = useState([])
     const { user } = useContext(AuthContext)
 
 
-    const { id } = useParams();
+    const { id } = useParams();     
     const { data: blog, refetch } = useQuery(['blog'], () =>
         axios.get(`${process.env.REACT_APP_URL}/blogs/${id}`).then((res) => res.data )
     );
-// useEffect(() => {
-//     fetch(`${process.env.REACT_APP_URL}/comments/${id}`)
-//                 .then((res) => res.json())
-//                 .then((data) => {
-//                   console.log(data);
-//                   setComments(data)
-//                   refetch()
+useEffect(() => {
+    fetch(`${process.env.REACT_APP_URL}/comments/${id}`)
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);
+                  setComments(data)
+                  refetch()
                   
            
                
-//                 });
+                });
             
-// refetch()
-// setRefresh(!refresh)
+refetch()
+
  
-// }, [id,refetch] )
-// console.log(comments);
+}, [id,refetch] )
+console.log(comments);
 
 
 
-    const { data: comments} = useQuery(['comments'], () =>
-        axios.get(`${process.env.REACT_APP_URL}/comments/${id}`).then((res) => res.data)
-    );
+    // const { data: comments} = useQuery(['comments'], () =>
+    //     axios.get(`${process.env.REACT_APP_URL}/comments/${id}`).then((res) => res.data)
+    // );
 
-useEffect(() => {
-    fetch(`${process.env.REACT_APP_URL}/like/${id}`)
-    .then((res) => res.json())
-    .then((data) => {
+     useEffect(() => {
+           fetch(`${process.env.REACT_APP_URL}/like/${id}`)
+               .then((res) => res.json())
+               .then((data) => {
     
-        
-
-            data?.like?.forEach((status) =>setLikeStatus( status?.like))
-
-     setLikeCount(data?.like)
-   
-    });
-}, [id])
-
-// useEffect(() => {
-//     fetch(`${process.env.REACT_APP_URL}/likestatus?id=${id}&email=${user?.email}`)
-//     .then((res) => res.json())
-//     .then((data) => {
-    
-      
-    
-  
-//      setLikeStatus(data)
-   
-//     });
-   
-   
-
-// }, [id, user?.email])
-
-
-console.log(likeCount);
-
-
-
-               
-
+                const status = data?.like?.find((liked) =>liked?.email===user?.email);
+                console.log(status);
+                
+                       if (status) {
+                       setLikeStatus(true)
+                           }
+                        else{
+                        setLikeStatus(false)
+                    }
+                    setLikeCount(data?.like)
+                       });
+    }, [id, user?.email])
 
 
 
@@ -111,16 +93,17 @@ console.log(likeCount);
     // const { data: likes} = useQuery(['likes'], () =>
     //     axios.get(`${process.env.REACT_APP_URL}/like/${id}`).then((res) => res.data)
     // );
-    const shareUrl = `https://remo-start.web.app/blog-details/${id}`;
+    const shareUrl = `https://remostart-daf09.web.app/blog-details/${id}`;
     
 
+// console.log(blog?.like.map((element) => element?.email ));
 
 
 
     
  
     const handleClick = () => {
-        fetch(`${process.env.REACT_APP_URL}/like?id=${id}&email=${user?.email}}`, {
+        fetch(`${process.env.REACT_APP_URL}/like?id=${id}&email=${user?.email}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -131,12 +114,20 @@ console.log(likeCount);
             .then((data) => {
                 console.log(data);
                 refetch()
-                document.location.reload(true)
+            setLikeStatus(true)
+            setLikeCount(blog?.like)
                 
-            })
+            }).then(() =>{
+                fetch(`${process.env.REACT_APP_URL}/like/${id}`)
+               .then((res) => res.json())
+               .then((data) => {
+                setLikeCount(data?.like)
+            });
+            } )
             .catch((err) => {
                 console.error(err);
             }); 
+            refetch()
     
         };
 
@@ -176,16 +167,53 @@ console.log(likeCount);
           const comment = {...data, user:user?.displayName, userPhoto:user?.photoURL, time:new Date()};
            console.log(comment);
           mutate(comment)
-          document.location.reload(true)
+        //   document.location.reload(true)
+        fetch(`${process.env.REACT_APP_URL}/comment/${id}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(comment),
+          
+        })
+            .then((res) => res.json())
+            .then((d) => {
+                console.log(d);
+               
+        
+                
+            }).then(() => {
+                fetch(`${process.env.REACT_APP_URL}/comments/${id}`)
+                                .then((res) => res.json())
+                                .then((data) => {
+                                  console.log(data);
+                                  setComments(data)
+                                  refetch()
+                                  
+                           
+                               
+                                });
+            })
+            .catch((err) => {
+                console.error(err);
+            }); 
+
+
+
+
 
     
             refetch();
             reset();
         };
+        const handleCopy = () => {
+            navigator.clipboard.writeText(shareUrl )  
+        toastify.success('Blog Link copied')
+            };
 
     return (
         <div className="bg-white grid min-h-screen place-items-center">
-            <div className="max-w-2xl overflow-hidden dark:bg-secondary bg-primary rounded-lg shadow-md ">
+            <div className=" container overflow-hidden dark:bg-secondary rounded-lg shadow-lg ">
                 <img
                     className="object-cover w-full h-64"
                     src="https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
@@ -195,48 +223,61 @@ console.log(likeCount);
                 <div className="p-6">
                     <div>
                     <div className="flex flex-wrap justify-between">
-                    <div className="flex space-x-2 text-sm dark:text-gray-400">
-			<button type="button" className="flex items-center p-1 space-x-1.5">
+                    <div className="flex space-x-2 text-sm ">
+                        <HashLink  to="#comment"><button type="button" className="flex items-center p-1 space-x-1.5 text-black">
 				<FaRegComments/>
 				<span>{comments?.length}</span>
-			</button>
-			<button onClick={handleClick} type="button" className="flex items-center p-1 space-x-1.5">
-            {likeStatus ? <AiFillLike/> : <BiLike />}
-				<span>{likeCount && likeCount.length || 0}</span>
-			</button>
+			</button></HashLink>
+			
 
-            <button aria-label="Bookmark this post" type="button" className="p-2">
+ 
+    {likeStatus &&  <button onClick={handleClick} type="button" className="flex items-center p-1 space-x-1.5 text-black">
+            <AiFillLike className='text-sky-500'/> 
+				<span>{likeCount && likeCount.length || 0}</span>
+			</button> }
+            {!likeStatus &&  <button onClick={handleClick} type="button" className="flex items-center p-1 space-x-1.5 text-black">
+            <BiLike />
+				<span>{likeCount && likeCount.length || 0}</span>
+			</button> }
+
+
+			{/* <button onClick={handleClick} type="button" className="flex items-center p-1 space-x-1.5 text-black">
+            {likeStatus ? <AiFillLike className='text-sky-500'/> : <BiLike />}
+				<span>{likeCount && likeCount.length || 0}</span>
+			</button> */}
+
+            {/* <button aria-label="Bookmark this post" type="button" className="p-2 text-black">
 				<BsBookmarkPlus/>
-			</button>
+			</button> */}
 		</div>
 		<div className="space-x-2 flex items-center">
-			<button aria-label="Share this post" type="button" className="p-2 text-center">
+			<button onClick={() => handleCopy()} aria-label="Share this post" type="button" className="p-2 text-center text-black">
 		<AiOutlineShareAlt/>
 			</button>
-            <span>
+            <span className='space-x-1'>
                         <FacebookShareButton url={shareUrl} quote="title" hashtag="#blog">
-                            <FacebookIcon size={30} round />
+                            <FacebookIcon size={22} round />
                         </FacebookShareButton>
                         <FacebookMessengerShareButton
                             url={shareUrl}
                             quote="title"
                             hashtag="#blog"
                         >
-                            <FacebookMessengerIcon size={30} round />
+                            <FacebookMessengerIcon size={22} round />
                         </FacebookMessengerShareButton>
 
                         <WhatsappShareButton url={shareUrl} quote="title" hashtag="#blog">
-                            <WhatsappIcon size={30} round />
+                            <WhatsappIcon size={22} round />
                         </WhatsappShareButton>
                         <TwitterShareButton url={shareUrl} quote="title" hashtag="#blog">
-                            <TwitterIcon size={30} round />
+                            <TwitterIcon size={22} round />
                         </TwitterShareButton>
                         <LinkedinShareButton url={shareUrl} quote="title" hashtag="#blog">
-                            <LinkedinIcon size={30} round />
+                            <LinkedinIcon size={22} round />
                         </LinkedinShareButton>
 
                         <TelegramShareButton url={shareUrl} quote="title" hashtag="#blog">
-                            <TelegramIcon size={30} round />
+                            <TelegramIcon size={22} round />
                         </TelegramShareButton>
                     </span> 
 			
@@ -244,12 +285,12 @@ console.log(likeCount);
 		
 	</div>
                         <h2
-                           className='text-4xl my-5'
+                           className='text-4xl text-black my-5'
                          
                            
                           
                         >
-                            I Built A Successful Blog In One Year
+                            {blog?.title}
                         </h2>
                      
                     </div>
@@ -262,37 +303,36 @@ console.log(likeCount);
                                     src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
                                     alt="Avatar"
                                 />
-                                <p
-                                   
-                                    className="mx-2 font-semibold text-gray-600 dark:text-gray-500"
-                                  
-                                >
-                                    Jone Doe
-                                </p>
+                                <div>
+                                    <p
+                                    
+                                        className="mx-2 font-semibold text-gray-600 dark:text-gray-500"
+                                    
+                                    >
+                                        Jon Doe
+                                    </p>
+                                    <p className="mx-2 pt-1 text-xs text-gray-600 dark:text-gray-300 font-semibold">
+                                    {blog?.postingTime}
+                                                                </p>
+                                </div>
                             </div>
-                            <p className="m-3 pt-1 text-xs text-gray-600 dark:text-gray-300 font-semibold">
-                                {blog?.postingTime}
-                            </p>
+                          
                         </div>
                     </div>
                     
                 </div>
                 <div>
 
-                    <div className='container my-20'>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore harum aut exercitationem odit laudantium nisi a perspiciatis. Quos autem incidunt obcaecati ipsa blanditiis eligendi inventore!</p>
-                        <br />
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore harum aut exercitationem odit laudantium nisi a perspiciatis. Quos autem incidunt obcaecati ipsa blanditiis eligendi inventore!</p>
-                        <br />
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore harum aut exercitationem odit laudantium nisi a perspiciatis. Quos autem incidunt obcaecati ipsa blanditiis eligendi inventore!</p>
-                        <br />
-                    </div>
                   
-                    <form
+
+                 
+                    <div className='container my-10 text-black' dangerouslySetInnerHTML={{ __html: blog?.description }}/>
+                  
+                    <form id='comment'
                     onSubmit={handleSubmit(onSubmit)}
-                    className="container ng-untouched ng-pristine ng-valid "
-                >   <div className='text-center'>
-                <label htmlFor="comments" className="text-xl ">
+                    className="container ng-untouched ng-pristine ng-valid shadow-lg pb-6 "
+                >   <div className='text-center '>
+                <label htmlFor="comments" className="text-xl text-black">
                   Share Your Thoughts
                     <textarea
                         required
@@ -320,11 +360,13 @@ console.log(likeCount);
             </div>
             </form>
 
-            <p className=' p-3 text-xl my-5'>comments({comments && comments?.length || 0})</p>
+            <p  className=' p-3 text-xl my-5 text-black'>comments({comments && comments?.length || 0})</p>
             
-           {comments && comments?.map((comment) =>(<div className='p-3 border-double border-4 border-secondary m-5 rounded' key={Math.random()}> 
-           <p>{user?.displayName}</p>
-           <p>{comment?.comments}</p></div>) )}
+           <div className=''>
+               {comments && comments?.map((comment) =>(<div className='p-4 py-6 space-y-2 shadow-lg   m-5 rounded text-black' key={Math.random()}>
+               <p className='font-semibold'>{comment?.user}</p>
+               <p>{comment?.comments}</p></div>) )}
+           </div>
                 </div>
             </div>
         </div>

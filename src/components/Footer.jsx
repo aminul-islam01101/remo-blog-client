@@ -1,101 +1,101 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/no-unknown-property */
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { FaFacebook, FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { BsDiscord, BsEnvelope, BsInstagram, BsLinkedin, BsTwitter } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import logo from '../assets/images/logoWhite.png';
 
 const Footer = () => (
-    <div>
-        <footer aria-label="Site Footer" className="bg-gray-900">
-            <div className="mx-auto px-4 pt-3 pb-3 sm:px-6 lg:px-8">
-                <div className="mt-8 grid justify-center place-content-center place-items-center grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-3 lg:gap-y-16">
-                    <div className="col-span-2 border-t border-white/10 pt-6 sm:col-span-1">
-                        <p className="font-bold text-white">Services</p>
-
-                        <nav
-                            aria-label="Footer Nav"
-                            className="mt-6 flex flex-col space-y-4 text-sm text-gray-300"
-                        >
-                            <Link to="/" className="inline-block" href="">
-                                About Us
-                            </Link>
-                            <Link to="/blogs" className="inline-block" href="">
-                                Blogs
-                            </Link>
-                        </nav>
+    <div className='bg-[#0B132A] '>
+    <footer className="flex justify-center items-center mt-10 ">
+        <div className=" text-white items-center w-full pt-6">
+            <div className="flex  flex-col-reverse justify-between w-full px-4 sm:px-10 md:px-20 md:flex-row gap-3">
+                <div className="flex  ">
+                    <div className="flex flex-col leading-7 items-start">
+                        <h1 className="text-lg font-semibold">CATEGORY</h1>
+                        <Link className="hover:text-cyan-600 text-sm" to="/">
+                            Home
+                        </Link>
+                        <Link className="hover:text-cyan-600 text-sm" to="/startup">
+                            Startup
+                        </Link>
+                        <Link className="hover:text-cyan-600 text-sm" to="/remoforce">
+                            Remo-Force
+                        </Link>
+                        <Link className="hover:text-cyan-600 text-sm" to="/services">
+                            Services
+                        </Link>
                     </div>
 
-                    <div className="col-span-2 border-t border-white/10 pt-6 sm:col-span-1">
-                        <p className="font-bold text-white">Helpful Links</p>
-
-                        <nav className="mt-6 flex flex-col space-y-4 text-sm text-gray-300">
-                            <Link className="inline-block" href="">
-                                Contact Us
-                            </Link>
-                            <Link className="inline-block" href="">
-                                Read review
-                            </Link>
-                        </nav>
-                    </div>
-
-                    <div className="col-span-2 border-t border-white/10 pt-6 sm:col-span-1">
-                        <p className="font-bold text-white">Legal</p>
-
-                        <nav className="mt-6 flex flex-col  text-sm text-gray-300">
-                            <Link className="inline-block" href="">
-                                Accessibility
-                            </Link>
-                            <Link className="inline-block" href="">
-                                Returns Policy
-                            </Link>
-                        </nav>
-                    </div>
-
-                    <div className="col-span-2 flex gap-4 text-gray-500 lg:col-span-4">
-                        <nav aria-label="Footer Services Nav" className="mt-4">
-                            <ul className="text-xl flex justify-center gap-3">
-                                <li>
-                                    <a className="text-blue-500" href="https://www.facebook.com/">
-                                        <FaFacebook />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="text-sky-500 " href="https://www.twitter.com/">
-                                        <FaTwitter />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="text-rose-500" href="https://www.instagram.com/">
-                                        <FaInstagram />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://www.github.com/">
-                                        <FaGithub />
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div className="flex flex-col leading-7 ml-20">
+                        <h1 className="text-lg font-semibold">Links</h1>
+                        <Link className="hover:text-cyan-600 text-sm" to="/">
+                            Menu
+                        </Link>
+                        <Link className="hover:text-cyan-600 text-sm" to="/Blog">
+                            Blog
+                        </Link>
+                        <Link className="hover:text-cyan-600 text-sm" to="/ourteam">
+                            Our Team
+                        </Link>
+                        <Link className="hover:text-cyan-600 text-sm" to="/Contacs">
+                            Contacs
+                        </Link>
                     </div>
                 </div>
-
-                <div className="mt-6 border-t border-white/10 pt-3">
-                    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                        <p className="text-center text-xs text-gray-400 lg:text-left">
-                            Copyright &copy; 2022. CodeReality. All rights reserved.
+                {/* bg-transparent border drop-shadow-sm shadow-transparent rounded-md placeholder-white px-12 py-2 focus:outline-none focus:border-cyan-600 text-white */}
+                <div className="flex flex-col mx-auto  md:flex-row ">
+                    <div className="flex  flex-col ">
+                        <span className="text-md font-bold mb-2">SUBSCRIBE</span>
+                        <div>
+                            <div className="flex flex-wrap gap-2 items-center  ">
+                                <div className="flex items-center bg-tr drop-shadow-sm shadow-transparent w-50 rounded-md border px-5  focus:outline-none  text-white  ">
+                                    <BsEnvelope className=" text-xl text-white" />
+                                    <input
+                                        className="outline-none  border-none focus:ring-0 bg-transparent placeholder-white"
+                                        type="email"
+                                        placeholder="Your Email Id"
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    className="py-2 px-4  rounded-md text-white bg-[#65DC7F] 
+                                   
+                                     hover:text-blue-500 hover:bg-white hover:font-semibold hover:transform ease-in-out duration-300"
+                                >
+                                    Subscribe
+                                </button>
+                            </div>
+                        </div>
+                        <p className="text-xs pt-2 ">
+                            By subscribing to newsletter you agree with our
+                            <Link to="#" className="text-blue-800">
+                                Privacy Policy
+                            </Link>
                         </p>
-
-                        <nav className="flex justify-center gap-4 text-xs text-gray-400 lg:justify-end">
-                            <Link href=""> Terms & Conditions</Link>
-                            <Link href=""> Privacy Policy</Link>
-                            <Link href=""> Cookies</Link>
-                        </nav>
                     </div>
                 </div>
             </div>
-        </footer>
+            <div className="w-full lg:px-20 px-0">
+                <hr className="md:overflow-hidden bg-[#19A5FF] h-[2px] mx-auto mt-5" />
+            </div>
+            <div className="flex  flex-col-reverse justify-between w-full md:px-20 px-4 sm:px-10 md:flex-row">
+                <div className="flex flex-col">
+                    <img src={logo} className="w-20 mt-5" alt="logo" />
+                    <p className="text-xs mt-3 mb-6">
+                        Scroll down the page for more recommendations. Below you will find a variety
+                        of products <br />
+                        from all categories on Steam that may be of interest to you.
+                    </p>
+                </div>
+                <div className="flex place-items-center justify-center space-x-3 mt-5 md:mt-0">
+                    <BsDiscord className="text-xl" />
+                    <BsLinkedin className="text-xl" />
+                    <BsInstagram className="text-xl" />
+                    <BsTwitter className="text-xl" />
+                </div>
+            </div>
+        </div>
+    </footer>
     </div>
 );
 

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
@@ -5,10 +6,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import JoditEditor from 'jodit-react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../../Contexts/AuthContext';
 
@@ -17,6 +19,11 @@ const AddProduct = () => {
 
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const editor = useRef(null);
+    const [content, setContent] = useState('');
+    const config = {
+        placeholder: 'Start typings...',
+    };
 
     // get book Category
 
@@ -69,8 +76,7 @@ const AddProduct = () => {
                         ...data,
                         image: imgData.data.url,
                         postingTime: new Date().toDateString(),
-                      
-                      
+                        description: content,
                     };
                     mutate(booksInfo);
                 }
@@ -80,17 +86,17 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="grid min-h-90v place-items-center  ">
+        <div className="grid min-h-90v place-items-center bg-white text-black  ">
             <h2 className="text-xl text-rose-600 font-bold my-10">{error}</h2>
-            <div className="w-full max-w-md space-y-3 rounded-xl p-8 bg-primary text-accent">
-                <h1 className="text-center text-2xl font-bold">Add Blogs</h1>
+            <div className="w-full  space-y-3 rounded-xl lg:w-60 p-6 shadow-lg text-accent">
+                <h1 className="text-center text-2xl font-bold text-black">Add Blogs</h1>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="ng-untouched ng-pristine ng-valid space-y-6"
                 >
                     <div>
                         <label className="label">
-                            <span className="label-text">Blog Title</span>
+                            <span className="label-text text-black">Blog Title</span>
                         </label>
                         <input
                             {...register('title', {
@@ -100,7 +106,7 @@ const AddProduct = () => {
                             type="text"
                             id="title"
                             placeholder="Blog Title"
-                            className="w-full  input py-2 input-bordered bg-error"
+                            className="  mt-1 w-full p-4 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md"
                         />
 
                         {errors?.title?.type === 'maxLength' && (
@@ -108,8 +114,8 @@ const AddProduct = () => {
                         )}
                     </div>
                     <div>
-                        <label className="label">
-                            <span className="label-text">Blog Author Name</span>
+                        <label className="label text-black">
+                            <span className="label-text text-black">Blog Author Name</span>
                         </label>
                         <input
                             {...register('authorName', {
@@ -119,7 +125,7 @@ const AddProduct = () => {
                             type="text"
                             id="authorName"
                             placeholder="Write Blog Author Name"
-                            className="w-full  input py-2 input-bordered bg-error"
+                            className="mt-1 w-full p-4 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md"
                         />
 
                         {errors?.authorName?.type === 'maxLength' && (
@@ -128,20 +134,16 @@ const AddProduct = () => {
                             </p>
                         )}
                     </div>
-          
-                
-              
-              
-            
+
                     {/* Category */}
                     <div className="form-control w-full ">
                         <label className="label">
-                            <span className="label-text">Book Category</span>
+                            <span className="label-text text-black">Blog Category</span>
                         </label>
                         <select
                             name=""
                             id=""
-                            className="select w-full  input py-2 input-bordered bg-error "
+                            className="mt-1 w-full p-4 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md "
                             {...register('categoryId', { required: true })}
                         >
                             {blogCategories.map((category) => (
@@ -155,20 +157,40 @@ const AddProduct = () => {
                     {/* photo */}
                     <div className="form-control w-full">
                         <label className="label">
-                            <span className="label-text">photo</span>
+                            <span className="label-text text-black">photo</span>
                         </label>
                         <input
                             type="file"
                             {...register('photo', { required: 'Image is required' })}
-                            className="input py-2 w-full  input py-2 input-bordered bg-error "
+                            className="mt-1 w-full p-4 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md "
                         />
                         {errors.photo && <p className="text-red-600">{errors.photo?.message}</p>}
                     </div>
                     {/* description */}
                     <div>
-                        <label htmlFor="message" className="text-sm">
-                            Book Description
+                        <label htmlFor="summery" className="text-sm text-black">
+                            Blog summery
                             <textarea
+                                required
+                                {...register('summery', {
+                                    minLength: 50,
+                                })}
+                                id="summery"
+                                placeholder="Write blog Summery"
+                                className="mt-1 w-full p-4 rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-md"
+                            />
+                            {errors?.summery && (
+                                <p className="text-red-500">
+                                    *summery should be minimum 50 Character
+                                </p>
+                            )}
+                        
+                        </label>
+                    </div>
+                    <div>
+                        <label htmlFor="message" className="text-sm text-black">
+                            Blog Description
+                            {/* <textarea
                                 required
                                 {...register('description', {
                                     minLength: 50,
@@ -181,7 +203,16 @@ const AddProduct = () => {
                                 <p className="text-red-500">
                                     *Description should be minimum 50 Character
                                 </p>
-                            )}
+                            )} */}
+                            <JoditEditor
+                                className="text-black"
+                                ref={editor}
+                                value={content}
+                                config={config}
+                                tabIndex={1} // tabIndex of textarea
+                                onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
+                                onChange={(newContent) => {}}
+                            />
                         </label>
                     </div>
 

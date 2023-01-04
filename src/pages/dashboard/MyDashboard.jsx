@@ -36,19 +36,19 @@ const MyDashboard = () => {
     console.log(currentUser);
 
     return (
-        <div className=" min-h-screen grid place-items-center bg-primary">
+        <div className=" min-h-screen grid place-items-center bg-white">
             <div className="flex items-center gap-5 flex-wrap justify-center">
                 <div>{/* <Lottie animationData={Welcome} /> */}</div>
                 <div>
                     {' '}
-                    <div className="text-xl text-accent text-center">
-                        Welcome to {currentUser?.user?.name}s dashboard
+                    <div className="text-xl text-black mb-3 text-center">
+                        Welcome to {currentUser?.user?.name}&#39;s dashboard
                     </div>
-                    <div>
+                    <div className='grid place-items-center'>
                         <label
                             htmlFor="dashboardOpener"
                             tabIndex={0}
-                            className="button text-accent lg:hidden"
+                            className="button text-accent  lg:hidden"
                         >
                             Click to Open Your dashBoard
                         </label>

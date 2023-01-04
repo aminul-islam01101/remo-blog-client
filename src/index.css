@@ -3,14 +3,13 @@
 @tailwind utilities;
 @layer components {
   .container {
-    @apply m-[0_auto] w-95 max-w-7xl px-0 sm:w-90 md:w-80 lg:w-70;
+    @apply m-[0_auto] px-4 sm:px-10 md:px-20  ;
   }
   .container-fluid {
     @apply w-full px-0;
   }
   .button {
-    @apply  inline-block whitespace-nowrap rounded-md border-0 bg-[#13D1FF] px-4 py-2 font-semibold uppercase text-black outline-none;
-    font-size: .8rem;
+    @apply     px-7 py-3 bg-[#0B132A] text-white text-xs font-semibold rounded-md
   }
 }
 body {

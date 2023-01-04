@@ -5,8 +5,8 @@ import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
 const Root = () => (
-    <div className='flex flex-col justify-between min-h-screen'>
-        <div >
+    <div className="flex flex-col justify-between min-h-screen">
+        <div className="">
             <Navbar />
             <Outlet />
         </div>
