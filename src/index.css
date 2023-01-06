@@ -11,6 +11,9 @@
   .button {
     @apply     px-7 py-3 bg-[#0B132A] text-white text-xs font-semibold rounded-md
   }
+  body {
+    @apply text-black bg-white
+  }
 }
 body {
   margin: 0;

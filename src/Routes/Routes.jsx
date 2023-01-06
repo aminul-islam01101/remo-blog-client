@@ -21,11 +21,13 @@ import AllBlogsList from '../pages/dashboard/admin/AllBlogsList';
 import ProtectedRoute from './ProtectedRoute';
 import UserRoute from './UserRoute';
 
+import MakeAdmin from '../pages/dashboard/admin/MakeAdmin';
 import UpdateBlog from '../pages/dashboard/admin/UpdateBlog';
 import MyBlogs from '../pages/dashboard/user/MyBlogs';
 import MyBookmark from '../pages/dashboard/user/MyBookmark';
-import MakeAdmin from '../pages/dashboard/admin/MakeAdmin';
+import SignupDetails from '../pages/startUp/SignupDetails';
 import StartUp from '../pages/startUp/StartUp';
+import StartupSignUp from '../pages/startUp/StartupSignUp';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -45,14 +47,13 @@ const router = createBrowserRouter(
                 </Route>
                 {/* <Route path="/blog-details/:id" element={<BlogDetails />} /> */}
                 <Route
-                path="/blog-details/:id"
-                element={
-                    <ProtectedRoute>
-                       <BlogDetails />
-                    </ProtectedRoute>
-                }
-               
-            />
+                    path="/blog-details/:id"
+                    element={
+                        <ProtectedRoute>
+                            <BlogDetails />
+                        </ProtectedRoute>
+                    }
+                />
                 {/* <Route
                     path="/category/:id"
                     element={
@@ -65,6 +66,8 @@ const router = createBrowserRouter(
                 <Route path="/Signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
                 <Route path="/start-up" element={<StartUp />} />
+                <Route path="/startup-signup" element={<StartupSignUp />} />
+                <Route path="/signup-details" element={<SignupDetails />} />
 
                 <Route
                     path="/dashboard/all-blogs/edit/:id"
@@ -89,7 +92,6 @@ const router = createBrowserRouter(
                 <Route
                     path="/dashboard/all-blogs"
                     element={
-                        
                         <AdminRoute>
                             <AllBlogsList />
                         </AdminRoute>
@@ -115,7 +117,7 @@ const router = createBrowserRouter(
                     path="/dashboard/make-admin"
                     element={
                         <AdminRoute>
-                            <MakeAdmin/>
+                            <MakeAdmin />
                         </AdminRoute>
                     }
                 />
