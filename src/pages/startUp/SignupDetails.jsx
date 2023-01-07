@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function SignupDetails() {
-    return <div className="">SignupDetails</div>;
-}
+const SignupDetails = () => <div>SignupDetails</div>;
+
+export default SignupDetails;
